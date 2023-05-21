@@ -4,20 +4,15 @@
 Например: 98+76-5+43-2-10=200.
 """
 
-from random import choice
+from itertools import product, zip_longest
 
-numbers: str = "9876543210"
-expression: str = ""
+NUMBERS: tuple = ("9", "8", "7", "6", "5", "4", "3", "2", "1", "0")
 
-possible_operators: tuple = ("+", "-", "")
+possible_combinations = product(("+", "-", ""), repeat=9)
 
-while True:
-    expression = ""
-    for i, v in enumerate(numbers):
-        expression += v
-        if i != 9:
-            expression += choice(possible_operators)
+for combination in possible_combinations:
+    expression_raw: list = list(zip_longest(NUMBERS, combination, fillvalue=''))
+    expression: str = "".join(map("".join, expression_raw))
+
     if eval(expression) == 200:
-        break
-
-print(f"{expression}=200")
+        print(f"{expression}=200")
